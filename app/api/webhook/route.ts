@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
+
+const redis = Redis.fromEnv();
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -27,8 +29,8 @@ export async function POST(req: Request) {
   // 2. Handle Media for automatic deletion
   if (message.photo || message.video || message.animation) {
     const messageId = message.message_id;
-    // Store in KV with a 60-second expiration for the cleanup task to find
-    await kv.set(`delete:${Date.now()}:${chatId}:${messageId}`, { chatId, messageId }, { ex: 60 });
+    // Store in Redis with a 60-second expiration
+    await redis.set(`delete:${Date.now()}:${chatId}:${messageId}`, { chatId, messageId }, { ex: 60 });
   }
 
   return NextResponse.json({ ok: true });
