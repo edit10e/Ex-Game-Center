@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   if (!message) return NextResponse.json({ ok: true });
 
   const BOT_TOKEN = process.env.BOT_TOKEN;
-  const BOT_VERSION = "1.0.1";
+  const BOT_VERSION = "1.0.2";
   const chatId = message.chat.id;
   const messageId = message.message_id;
 
