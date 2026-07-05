@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   if (!message) return NextResponse.json({ ok: true });
 
   const BOT_TOKEN = process.env.BOT_TOKEN;
-  const BOT_VERSION = "1.0.2";
+  const BOT_VERSION = "1.0.3";
   const chatId = message.chat.id;
 
   // 1. Simple status command
