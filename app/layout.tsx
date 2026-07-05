@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import TelegramGuard from '@/components/TelegramGuard';
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,7 +27,17 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        <script src="https://telegram.org/js/telegram-web-app.js" async />
+      </head>
+      {/* Container to center and limit width on desktop */}
+      <body className="h-full flex justify-center bg-gray-900">
+        <TelegramGuard>
+ <main className="w-full max-w-[480px] h-full bg-white shadow-2xl overflow-hidden relative">
+          {children}
+        </main>        </TelegramGuard>
+       
+      </body>
     </html>
   );
 }
